@@ -75,8 +75,8 @@
     var config = $parse($attrs.ckeditor)($scope) || {};
     var editorElement = $element[0];
     var instance;
-    if (editorElement.hasAttribute('contenteditable') &&
-        editorElement.getAttribute('contenteditable').toLowerCase() == 'true') {
+    if ((editorElement.hasAttribute('contenteditable') &&
+        editorElement.getAttribute('contenteditable').toLowerCase() == 'true') || config.inline) {
       instance = this.instance = CKEDITOR.inline(editorElement, config);
     }
     else {
