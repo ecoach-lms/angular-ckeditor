@@ -82,6 +82,21 @@
     else {
       instance = this.instance = CKEDITOR.replace(editorElement, config);
     }
+    if (config.instance) {
+      $scope.$eval(config.instance + ' = i', {i: instance});
+    }
+    if (config.focused) {
+      instance.on('focus', function() {
+        $scope.$apply(function() {
+          $scope.$eval(config.focused + ' = true');
+        });
+      });
+      instance.on('blur', function() {
+        $scope.$apply(function() {
+          $scope.$eval(config.focused + ' = false');
+        });
+      });
+    }
 
     /**
      * Listen on events of a given type.
