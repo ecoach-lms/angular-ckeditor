@@ -82,7 +82,6 @@
     // Create editor instance.
     var config = $parse($attrs.ckeditor)($scope) || {};
     config = _.defaults({}, config, ckeditorSettings);
-    debugger;
     var editorElement = $element[0];
     var instance;
     if ((editorElement.hasAttribute('contenteditable') &&
