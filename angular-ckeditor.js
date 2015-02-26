@@ -1,12 +1,19 @@
 (function (root, factory) {
   // AMD
-  if (typeof define === 'function' && define.amd) define(['angular'], factory);
+  if (typeof define === 'function' && define.amd) define(['angular', 'underscore'], factory);
   // Global
-  else factory(angular);
-}(this, function (angular) {
+  else factory(angular, _);
+}(this, function (angular, _) {
 
   angular
   .module('ckeditor', [])
+  .provider('ckeditorSettings', function() {
+    this.settings = {};
+    this.$get = function() { return this.settings; };
+    this.set = function(newSettings) {
+      _.extend(this.settings, newSettings);
+    };
+  })
   .directive('ckeditor', ['$parse', ckeditorDirective]);
 
   // Create setImmediate function.
@@ -31,6 +38,7 @@
         '$attrs',
         '$parse',
         '$q',
+        'ckeditorSettings',
         ckeditorController
       ],
       link: function (scope, element, attrs, ctrls) {
@@ -70,9 +78,11 @@
    * CKEditor controller.
    */
 
-  function ckeditorController($scope, $element, $attrs, $parse, $q) {
+  function ckeditorController($scope, $element, $attrs, $parse, $q, ckeditorSettings) {
     // Create editor instance.
     var config = $parse($attrs.ckeditor)($scope) || {};
+    config = _.defaults({}, config, ckeditorSettings);
+    debugger;
     var editorElement = $element[0];
     var instance;
     if ((editorElement.hasAttribute('contenteditable') &&
