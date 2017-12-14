@@ -1,9 +1,8 @@
 {
   "name": "angular-ckeditor",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "CKEditor directive for Angular.",
   "scripts": {
-    "install": "bower install",
     "test": "./node_modules/karma/bin/karma start --single-run"
   },
   "repository": {
